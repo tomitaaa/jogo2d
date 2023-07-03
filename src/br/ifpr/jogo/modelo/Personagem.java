@@ -3,9 +3,10 @@ package br.ifpr.jogo.modelo;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
+import java.util.ArrayList;
 
 public class Personagem {
-    
+
     private int posicaoEmX;
     private int posicaoEmY;
     private int deslocamentoEmX;
@@ -14,14 +15,16 @@ public class Personagem {
     private int larguraImagem;
     private int alturaImagem;
     private int velocidadeDeDeslocamento;
+    private ArrayList<Tiro> tiros;
 
     private static final int POSICAO_INICIAL_EM_X = 100;
     private static final int POSICAO_INICIAL_EM_Y = 100;
+    public static final int DESLOCAMENTO = 3;
 
-    public Personagem(int velocidadeDeDeslocamento) {
+    public Personagem() {
         this.posicaoEmX = POSICAO_INICIAL_EM_X;
         this.posicaoEmY = POSICAO_INICIAL_EM_Y;
-        this.velocidadeDeDeslocamento = velocidadeDeDeslocamento;
+        this.tiros = new ArrayList<Tiro>();
     }
 
     public void carregar() {
@@ -39,16 +42,16 @@ public class Personagem {
     public void mover(KeyEvent tecla) {
         int codigo = tecla.getKeyCode();
         switch (codigo) {
-            case KeyEvent.VK_UP:
+            case KeyEvent.VK_UP, KeyEvent.VK_W:
                 this.deslocamentoEmY = -this.velocidadeDeDeslocamento;
                 break;
-            case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_DOWN, KeyEvent.VK_S:
                 this.deslocamentoEmY = this.velocidadeDeDeslocamento;
                 break;
-            case KeyEvent.VK_RIGHT:
+            case KeyEvent.VK_RIGHT, KeyEvent.VK_A:
                 this.deslocamentoEmX = this.velocidadeDeDeslocamento;
                 break;
-            case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_LEFT, KeyEvent.VK_D:
                 this.deslocamentoEmX = -this.velocidadeDeDeslocamento;
                 break;
 
@@ -76,6 +79,13 @@ public class Personagem {
             default:
                 break;
         }
+    }
+
+    public void atirar() {
+        int frenteDaNave = this.posicaoEmX + this.larguraImagem;
+        int meioDaNave = this.posicaoEmY + (this.alturaImagem / 2);
+        Tiro tiro = new Tiro(frenteDaNave, meioDaNave);
+        this.tiros.add(tiro);
     }
 
     public int getPosicaoEmX() {
@@ -132,6 +142,22 @@ public class Personagem {
 
     public void setAlturaImagem(int alturaImagem) {
         this.alturaImagem = alturaImagem;
+    }
+
+    public int getVelocidadeDeDeslocamento() {
+        return this.velocidadeDeDeslocamento;
+    }
+
+    public void setVelocidadeDeDeslocamento(int velocidadeDeDeslocamento) {
+        this.velocidadeDeDeslocamento = velocidadeDeDeslocamento;
+    }
+
+    public ArrayList<Tiro> getTiros() {
+        return this.tiros;
+    }
+
+    public void setTiros(ArrayList<Tiro> tiros) {
+        this.tiros = tiros;
     }
 
 }
