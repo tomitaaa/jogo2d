@@ -1,21 +1,16 @@
 package br.ifpr.jogo.modelo;
 
-import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class FaseUm extends Fase{
-    
+public class FaseUm extends Fase {
+
     private static final int DELAY = 5;
-    private static final int VELOCIDADE_DE_DESLOCAMENTO = 3;
     private static final int LARGURA_DA_JANELA = 1200;
     private ArrayList<Inimigo> inimigos;
     private static final int QTDE_DE_INIMIGOS = 40;
@@ -34,30 +29,37 @@ public class FaseUm extends Fase{
         this.timer.start();
 
     }
+
     @Override
     public void paint(Graphics g) {
         Graphics2D graficos = (Graphics2D) g;
-        graficos.drawImage(fundo, 0, 0, null);
-        graficos.drawImage(personagem.getImagem(), personagem.getPosicaoEmX(), personagem.getPosicaoEmY(), this);
+        boolean emJogo = true;
+        if (emJogo) {
+            graficos.drawImage(fundo, 0, 0, null);
+            graficos.drawImage(personagem.getImagem(), personagem.getPosicaoEmX(), personagem.getPosicaoEmY(), this);
 
-        ArrayList<Tiro> tiros = personagem.getTiros();
+            ArrayList<Tiro> tiros = personagem.getTiros();
 
-        for (Tiro tiro : tiros) {
+            for (Tiro tiro : tiros) {
 
-            tiro.carregar();
+                tiro.carregar();
 
-            graficos.drawImage(tiro.getImagem(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
+                graficos.drawImage(tiro.getImagem(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
+            }
+
+            for (Inimigo inimigo : inimigos) {
+
+                inimigo.carregar();
+
+                graficos.drawImage(inimigo.getImagem(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
+            }
+        } else {
+            ImageIcon fimDeJogo = new ImageIcon("recursos\\fimdejogo.png");
+            graficos.drawImage(fimDeJogo.getImage(), 0, 0, null);
         }
-
-        for (Inimigo inimigo : inimigos) {
-
-            inimigo.carregar();
-
-            graficos.drawImage(inimigo.getImagem(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
-        }
-
         g.dispose();
     }
+
     @Override
     public void inicializaInimigos() {
         inimigos = new ArrayList<Inimigo>();
@@ -117,6 +119,35 @@ public class FaseUm extends Fase{
         }
 
         repaint();
+    }
+
+    @Override
+    public void ActionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'ActionPerformed'");
+    }
+
+    @Override
+    public void verficarColisoes() {
+        Rectangle formaPersonagem = this.personagem.getRectangle();
+        for (int i = 0; i < this.inimigos.size(); i++) {
+            Inimigo inimigo = inimigos.get(i);
+            Rectangle formaInimigo = inimigo.getRectangle();
+            if (formaInimigo.intersects(formaPersonagem)) {
+                this.personagem.setEhVisivel(false);
+                inimigo.setEhVisivel(false);
+                emJogo = false;
+            }
+            ArrayList<Tiro> tiros = this.personagem.getTiros();
+            for (int j = 0; j < tiros.size(); j++) {
+                Tiro tiro = tiros.get(j);
+                Rectangle formaTiro = tiro.getRectangle();
+                if (formaInimigo.intersects(formaTiro)) {
+                    inimigo.setEhVisivel(false);
+                    tiro.setEhVisivel(false);
+                }
+            }
+        }
     }
 
 }

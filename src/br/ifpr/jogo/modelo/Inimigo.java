@@ -1,9 +1,8 @@
 package br.ifpr.jogo.modelo;
 
-import java.awt.Image;
 import javax.swing.ImageIcon;
-    
-public class Inimigo extends ElementoGrafico{
+
+public class Inimigo extends ElementoGrafico {
 
     private static int VELOCIDADE = 2;
 
@@ -11,6 +10,7 @@ public class Inimigo extends ElementoGrafico{
         this.posicaoEmX = xAleatorio;
         this.posicaoEmY = yAleatorio;
     }
+
     @Override
     public void carregar() {
         ImageIcon carregando = new ImageIcon("recursos\\inimigo.jpg");
@@ -18,6 +18,7 @@ public class Inimigo extends ElementoGrafico{
         this.alturaImagem = this.imagem.getHeight(null);
         this.larguraImagem = this.imagem.getWidth(null);
     }
+
     @Override
     public void atualizar() {
         this.posicaoEmX = this.posicaoEmX - VELOCIDADE;

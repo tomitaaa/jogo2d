@@ -1,6 +1,5 @@
 package br.ifpr.jogo.modelo;
 
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import java.util.ArrayList;
@@ -20,6 +19,7 @@ public class Personagem extends ElementoGrafico {
         this.posicaoEmY = POSICAO_INICIAL_EM_Y;
         this.tiros = new ArrayList<Tiro>();
     }
+
     @Override
     public void carregar() {
         ImageIcon carregando = new ImageIcon("recursos\\espaconave.png");
@@ -27,6 +27,7 @@ public class Personagem extends ElementoGrafico {
         this.alturaImagem = this.imagem.getWidth(null);
         this.larguraImagem = this.imagem.getHeight(null);
     }
+
     @Override
     public void atualizar() {
         this.posicaoEmX = this.posicaoEmX + this.deslocamentoEmX;

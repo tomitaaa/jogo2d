@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-public class FaseDois extends Fase{
+public class FaseDois extends Fase {
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -41,5 +41,17 @@ public class FaseDois extends Fase{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'inicializaInimigos'");
     }
-    
+
+    @Override
+    public void ActionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'ActionPerformed'");
+    }
+
+    @Override
+    public void verficarColisoes() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'verficarColisoes'");
+    }
+
 }

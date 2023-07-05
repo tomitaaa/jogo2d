@@ -1,13 +1,27 @@
 package br.ifpr.jogo.modelo;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 
 public abstract class ElementoGrafico {
-     int posicaoEmX;
-     int posicaoEmY;
-     Image imagem;
-     int larguraImagem;
-     int alturaImagem;
+    int posicaoEmX;
+    int posicaoEmY;
+    Image imagem;
+    int larguraImagem;
+    int alturaImagem;
+    private boolean ehVisivel = true;
+
+    public boolean isEhVisivel() {
+        return ehVisivel;
+    }
+
+    public void setEhVisivel(boolean ehVisivel) {
+        this.ehVisivel = ehVisivel;
+    }
+
+    public Rectangle getRectangle() {
+        return new Rectangle(posicaoEmX, posicaoEmY, larguraImagem, alturaImagem);
+    }
 
     public int getPosicaoEmX() {
         return this.posicaoEmX;
@@ -48,9 +62,9 @@ public abstract class ElementoGrafico {
     public void setAlturaImagem(int alturaImagem) {
         this.alturaImagem = alturaImagem;
     }
-    
-    public abstract void carregar(); 
+
+    public abstract void carregar();
 
     public abstract void atualizar();
-    
+
 }
