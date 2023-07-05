@@ -5,6 +5,8 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
@@ -33,7 +35,6 @@ public class FaseUm extends Fase {
     @Override
     public void paint(Graphics g) {
         Graphics2D graficos = (Graphics2D) g;
-        boolean emJogo = true;
         if (emJogo) {
             graficos.drawImage(fundo, 0, 0, null);
             graficos.drawImage(personagem.getImagem(), personagem.getPosicaoEmX(), personagem.getPosicaoEmY(), this);
@@ -100,7 +101,7 @@ public class FaseUm extends Fase {
 
             Tiro tiro = tiros.get(i);
 
-            if (tiro.getPosicaoEmX() > LARGURA_DA_JANELA)
+            if (tiro.getPosicaoEmX() > LARGURA_DA_JANELA || !tiro.getEhVisivel())
 
                 tiros.remove(tiro);
             else
@@ -112,19 +113,15 @@ public class FaseUm extends Fase {
 
             Inimigo inimigo = this.inimigos.get(i);
 
-            if (inimigo.getPosicaoEmX() < 0)
+            if (inimigo.getPosicaoEmX() < 0 || !inimigo.getEhVisivel())
+
                 inimigos.remove(inimigo);
             else
+
                 inimigo.atualizar();
         }
-
+        this.verficarColisoes();
         repaint();
-    }
-
-    @Override
-    public void ActionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ActionPerformed'");
     }
 
     @Override

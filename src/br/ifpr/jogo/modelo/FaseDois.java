@@ -43,12 +43,6 @@ public class FaseDois extends Fase {
     }
 
     @Override
-    public void ActionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ActionPerformed'");
-    }
-
-    @Override
     public void verficarColisoes() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'verficarColisoes'");

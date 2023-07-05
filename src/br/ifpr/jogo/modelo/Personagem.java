@@ -15,23 +15,23 @@ public class Personagem extends ElementoGrafico {
     public static final int DESLOCAMENTO = 3;
 
     public Personagem() {
-        this.posicaoEmX = POSICAO_INICIAL_EM_X;
-        this.posicaoEmY = POSICAO_INICIAL_EM_Y;
+        setPosicaoEmX(POSICAO_INICIAL_EM_X);
+        setPosicaoEmY(POSICAO_INICIAL_EM_Y);
         this.tiros = new ArrayList<Tiro>();
     }
 
     @Override
     public void carregar() {
         ImageIcon carregando = new ImageIcon("recursos\\espaconave.png");
-        this.imagem = carregando.getImage();
-        this.alturaImagem = this.imagem.getWidth(null);
-        this.larguraImagem = this.imagem.getHeight(null);
+        setImagem(carregando.getImage());
+        setAlturaImagem(carregando.getImage().getHeight(null));
+        setLarguraImagem(carregando.getImage().getWidth(null));
     }
 
     @Override
     public void atualizar() {
-        this.posicaoEmX = this.posicaoEmX + this.deslocamentoEmX;
-        this.posicaoEmY = this.posicaoEmY + this.deslocamentoEmY;
+        setPosicaoEmX(getPosicaoEmX() + this.deslocamentoEmX);
+        setPosicaoEmY(getPosicaoEmY() + this.deslocamentoEmY);
     }
 
     public void mover(KeyEvent tecla) {
@@ -85,8 +85,8 @@ public class Personagem extends ElementoGrafico {
     }
 
     public void atirar() {
-        int frenteDaNave = this.posicaoEmX + this.larguraImagem;
-        int meioDaNave = this.posicaoEmY + (this.alturaImagem / 2);
+        int frenteDaNave = getPosicaoEmX() + getLarguraImagem();
+        int meioDaNave = getPosicaoEmY() + (getAlturaImagem() / 2);
         Tiro tiro = new Tiro(frenteDaNave, meioDaNave);
         this.tiros.add(tiro);
     }

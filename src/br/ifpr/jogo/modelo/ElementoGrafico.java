@@ -4,14 +4,14 @@ import java.awt.Image;
 import java.awt.Rectangle;
 
 public abstract class ElementoGrafico {
-    int posicaoEmX;
-    int posicaoEmY;
-    Image imagem;
-    int larguraImagem;
-    int alturaImagem;
+    private int posicaoEmX;
+    private int posicaoEmY;
+    private Image imagem;
+    private int larguraImagem;
+    private int alturaImagem;
     private boolean ehVisivel = true;
 
-    public boolean isEhVisivel() {
+    public boolean getEhVisivel() {
         return ehVisivel;
     }
 
