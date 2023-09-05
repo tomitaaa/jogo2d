@@ -3,6 +3,7 @@ package br.ifpr.jogo.modelo;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import java.util.ArrayList;
+import java.awt.Graphics2D;
 
 public class Personagem extends ElementoGrafico {
 
@@ -13,6 +14,32 @@ public class Personagem extends ElementoGrafico {
     private static final int POSICAO_INICIAL_EM_X = 100;
     private static final int POSICAO_INICIAL_EM_Y = 100;
     public static final int DESLOCAMENTO = 3;
+    private int pontuacao;
+    private Personagem personagem;
+
+    public int getDeslocamentoEmX() {
+        return this.deslocamentoEmX;
+    }
+
+    public void setDeslocamentoEmX(int deslocamentoEmX) {
+        this.deslocamentoEmX = deslocamentoEmX;
+    }
+
+    public int getDeslocamentoEmY() {
+        return this.deslocamentoEmY;
+    }
+
+    public void setDeslocamentoEmY(int deslocamentoEmY) {
+        this.deslocamentoEmY = deslocamentoEmY;
+    }
+
+    public int getPontuacao() {
+        return this.pontuacao;
+    }
+
+    public void setPontuacao(int pontuacao) {
+        this.pontuacao = pontuacao;
+    }
 
     public Personagem() {
         setPosicaoEmX(POSICAO_INICIAL_EM_X);
@@ -97,6 +124,14 @@ public class Personagem extends ElementoGrafico {
 
     public void setTiros(ArrayList<Tiro> tiros) {
         this.tiros = tiros;
+    }
+
+    public void desenhaPontuacao(Graphics2D graficos) {
+
+        String textoPontuacao = "PONTOS: " + personagem.getPontuacao();
+        graficos.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 22));
+        graficos.setColor(new java.awt.Color(255, 255, 255));
+        graficos.drawString(textoPontuacao, 20, 25);
     }
 
 }

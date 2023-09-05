@@ -6,9 +6,12 @@ import java.util.ArrayList;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
+import br.ifpr.jogo.modelo.Fase;
+import br.ifpr.jogo.principal.Principal;
+// import static br.ifpr.jogo.modelo.Fase.QTDE_DE_ASTEROIDES;
+import br.ifpr.jogo.modelo.Asteroide;
 
 public class FaseUm extends Fase {
 
@@ -16,17 +19,38 @@ public class FaseUm extends Fase {
     private static final int LARGURA_DA_JANELA = 1200;
     private ArrayList<Inimigo> inimigos;
     private static final int QTDE_DE_INIMIGOS = 40;
+    private static final int QTDE_DE_ASTEROIDES = 20;
+    private static final int PONTOS_POR_INIMIGO = 10;
+    private ArrayList<Asteroide> asteroides;
+
+    public ArrayList<Inimigo> getInimigos() {
+        return this.inimigos;
+    }
+
+    public void setInimigos(ArrayList<Inimigo> inimigos) {
+        this.inimigos = inimigos;
+    }
+
+    public ArrayList<Asteroide> getAsteroides() {
+        return this.asteroides;
+    }
+
+    public void setAsteroides(ArrayList<Asteroide> asteroides) {
+        this.asteroides = asteroides;
+    }
 
     public FaseUm() {
+        super();
+        this.emJogo = true;
         this.setFocusable(true);
         this.setDoubleBuffered(true);
         ImageIcon carregando = new ImageIcon("recursos\\fundo.jpg");
-        fundo = carregando.getImage();
-        personagem = new Personagem();
+        this.fundo = carregando.getImage();
+        this.personagem = new Personagem();
         personagem.carregar();
         this.inicializaInimigos();
         this.addKeyListener(this);
-
+        this.inicializaElementosGraficosAdicionais();
         this.timer = new Timer(DELAY, this);
         this.timer.start();
 
@@ -37,26 +61,24 @@ public class FaseUm extends Fase {
         Graphics2D graficos = (Graphics2D) g;
         if (emJogo) {
             graficos.drawImage(fundo, 0, 0, null);
+
+            for (Asteroide asteroide : asteroides) {
+                graficos.drawImage(asteroide.getImagem(), asteroide.getPosicaoEmX(), asteroide.getPosicaoEmY(), this);
+            }
             graficos.drawImage(personagem.getImagem(), personagem.getPosicaoEmX(), personagem.getPosicaoEmY(), this);
 
             ArrayList<Tiro> tiros = personagem.getTiros();
-
             for (Tiro tiro : tiros) {
-
-                tiro.carregar();
-
                 graficos.drawImage(tiro.getImagem(), tiro.getPosicaoEmX(), tiro.getPosicaoEmY(), this);
             }
 
             for (Inimigo inimigo : inimigos) {
-
-                inimigo.carregar();
-
                 graficos.drawImage(inimigo.getImagem(), inimigo.getPosicaoEmX(), inimigo.getPosicaoEmY(), this);
             }
+            super.desenhaPontuacao(graficos);
         } else {
-            ImageIcon fimDeJogo = new ImageIcon("recursos\\fimdejogo.png");
-            graficos.drawImage(fimDeJogo.getImage(), 0, 0, null);
+            ImageIcon fimDeJogo = new ImageIcon("recursos\\fimdejogo.jpg");
+            graficos.drawImage(fimDeJogo.getImage(), 0, 0, this);
         }
         g.dispose();
     }
@@ -94,7 +116,9 @@ public class FaseUm extends Fase {
     @Override
     public void actionPerformed(ActionEvent e) {
         personagem.atualizar();
-
+        for (Asteroide asteroide : this.asteroides) {
+            asteroide.atualizar();
+        }
         ArrayList<Tiro> tiros = personagem.getTiros();
 
         for (int i = 0; i < tiros.size(); i++) {
@@ -144,6 +168,17 @@ public class FaseUm extends Fase {
                     tiro.setEhVisivel(false);
                 }
             }
+        }
+    }
+
+    @Override
+    public void inicializaElementosGraficosAdicionais() {
+        this.asteroides = new ArrayList<Asteroide>();
+        for (int i = 0; i < QTDE_DE_ASTEROIDES; i++) {
+            int x = (int) (Math.random() * Principal.LARGURA_DA_JANELA);
+            int y = (int) (Math.random() * Principal.ALTURA_DA_JANELA);
+            Asteroide asteroide = new Asteroide(x, y);
+            this.asteroides.add(asteroide);
         }
     }
 
